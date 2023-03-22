@@ -12,7 +12,7 @@ TILESIZE = 32
 fps=60
 
 PLAYER_SPEED=5
-fruit_speed=1
+fruit_speed=4
 
 win_width, win_height = 510, 510
 
@@ -31,6 +31,5 @@ tilemap = [
     'B..............B',
     'B..............B',
     'B......P.......B',
-    'BBBBBBBBBBBBBBBB',
     'BBBBBBBBBBBBBBBB',
 ]

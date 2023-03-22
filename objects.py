@@ -91,6 +91,9 @@ class Fruit(pygame.sprite.Sprite):
 
         self.rect=self.image.get_rect()
         self.rect.y=self.y
+        self.rect.x=self.x
+
+        self.alive=True
 
         self.y_change=0
 
@@ -98,21 +101,27 @@ class Fruit(pygame.sprite.Sprite):
         self.movement()
 
         self.rect.y+=self.y_change
-        self.collision('y')
+        self.collide_blocks('y')
 
         self.y_change=0
 
-        
-
-    def collision(self,direction):
-        self.collide_blocks(direction)
+    
 
     def collide_blocks(self,direction):
         if direction=='y':
             hits=pygame.sprite.spritecollide(self,self.game.blocks,False)
             if hits:
+                if self.y_change>0:
+                    self.rect.y=hits[0].rect.top-self.rect.height
+                    self.alive=False
+
                 if self.y_change<0:
                     self.rect.y=hits[0].rect.bottom
+                    self.alive=False
+                    
 
     def movement(self):
-        self.rect.y+=fruit_speed
+        if self.alive:
+            self.rect.y+=fruit_speed
+        if self.alive == False:
+            self.kill()

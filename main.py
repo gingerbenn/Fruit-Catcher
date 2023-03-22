@@ -36,7 +36,6 @@ class Game:
 
     def draw(self):
         self.screen.blit(self.bg,(0,0))
-        # self.screen.fill(black)
         self.all_sprites.draw(self.screen)
         self.clock.tick(fps)
         pygame.display.update()
