@@ -10,7 +10,7 @@ class Game:
         self.bg=pygame.image.load('assets/test background.png')
         self.bg=pygame.transform.scale(self.bg,(win_width,win_height))
 
-        self.screen=pygame.display.set_caption('fruit catcher')
+        self.screen=pygame.display.set_caption('fruit catcher™')
         self.screen=pygame.display.set_mode((win_width, win_height))
         self.clock=pygame.time.Clock()
 
@@ -20,8 +20,10 @@ class Game:
         self.playing=True
 
         self.all_sprites=pygame.sprite.LayeredUpdates()
+        self.blocks=pygame.sprite.LayeredUpdates()
+        self.fruits=pygame.sprite.LayeredUpdates()
 
-        self.player=Player(self,10,10)
+        self.createTilemap()
 
     def events(self):
         for event in pygame.event.get():
@@ -33,8 +35,8 @@ class Game:
         self.all_sprites.update()
 
     def draw(self):
-        # self.screen.blit(self.bg,(0,0))
-        self.screen.fill(black)
+        self.screen.blit(self.bg,(0,0))
+        # self.screen.fill(black)
         self.all_sprites.draw(self.screen)
         self.clock.tick(fps)
         pygame.display.update()
@@ -45,6 +47,16 @@ class Game:
             self.events()
             self.update()
         self.running=False
+    
+    def createTilemap(self):
+        for i,row in enumerate(tilemap):
+            for j,column in enumerate(row):
+                if column=='B':
+                    Block(self,j,i)
+                if column =='P':
+                    Player(self,j,i)
+                if column=='F':
+                    Fruit(self,j,i)
 
 g=Game()
 g.new()
