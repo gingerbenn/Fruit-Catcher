@@ -53,7 +53,7 @@ class Game:
                 if column=='B':
                     Block(self,j,i)
                 if column =='P':
-                    Player(self,j,i)
+                    self.player = Player(self,j,i)
                 if column=='F':
                     Fruit(self,j,i)
 

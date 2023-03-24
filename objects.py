@@ -23,6 +23,8 @@ class Player(pygame.sprite.Sprite):
         self.rect=self.image.get_rect()
         self.rect.x=self.x
         self.rect.y=self.y
+
+        self.score=0
     
     def update(self):
         self.movement()
@@ -68,7 +70,7 @@ class Block(pygame.sprite.Sprite):
 
         self.image = pygame.Surface([self.width,self.height])
         self.image.fill(blue)
-        self.image.set_colorkey(blue)
+        #self.image.set_colorkey(blue)
 
         self.rect=self.image.get_rect()
         self.rect.x=self.x
@@ -76,9 +78,9 @@ class Block(pygame.sprite.Sprite):
 
 class Fruit(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
-        self.game=game
-        self._layer=fruit_layer
-        self.groups=self.game.all_sprites, self.game.fruits
+        self.game = game
+        self._layer = fruit_layer
+        self.groups = self.game.all_sprites, self.game.fruits
         pygame.sprite.Sprite.__init__(self,self.groups)
 
         self.x = x * TILESIZE
@@ -86,42 +88,44 @@ class Fruit(pygame.sprite.Sprite):
         self.width = TILESIZE
         self.height = TILESIZE
 
-        self.image = pygame.Surface([self.width,self.height])
+        self.image = pygame.Surface([self.width, self.height])
         self.image.fill(green)
 
-        self.rect=self.image.get_rect()
-        self.rect.y=self.y
-        self.rect.x=self.x
+        self.rect = self.image.get_rect()
+        self.rect.y = self.y
+        self.rect.x = self.x
 
-        self.alive=True
+        self.alive = True
 
-        self.y_change=0
+        self.y_change = 0
 
     def update(self):
         self.movement()
 
-        self.rect.y+=self.y_change
-        self.collide_blocks('y')
+        self.rect.y += self.y_change
+        self.collide_floor('y')
 
-        self.y_change=0
+        self.y_change = 0
 
     
 
-    def collide_blocks(self,direction):
-        if direction=='y':
-            hits=pygame.sprite.spritecollide(self,self.game.blocks,False)
+    def collide_floor(self,direction):
+        if direction == 'y':
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
             if hits:
-                if self.y_change>0:
-                    self.rect.y=hits[0].rect.top-self.rect.height
-                    self.alive=False
+                self.alive = False
 
-                if self.y_change<0:
-                    self.rect.y=hits[0].rect.bottom
-                    self.alive=False
+    def collide_player(self,direction):
+        if direction == 'y':
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
+            if hits:
+                self.alive = False
                     
 
     def movement(self):
         if self.alive:
-            self.rect.y+=fruit_speed
+            self.rect.y += fruit_speed
         if self.alive == False:
             self.kill()
+            self.game.player.score-=1
+            print(self.game.player.score)

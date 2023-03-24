@@ -6,7 +6,7 @@ green=(0,255,0)
 
 PLAYER_LAYER = 3
 block_layer = 1
-fruit_layer = 2
+fruit_layer = 1
 
 TILESIZE = 32
 fps=60
@@ -32,4 +32,5 @@ tilemap = [
     'B..............B',
     'B......P.......B',
     'BBBBBBBBBBBBBBBB',
+    
 ]
