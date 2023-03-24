@@ -96,6 +96,7 @@ class Fruit(pygame.sprite.Sprite):
         self.rect.x = self.x
 
         self.alive = True
+        self.catch=False
 
         self.y_change = 0
 
@@ -119,7 +120,7 @@ class Fruit(pygame.sprite.Sprite):
         if direction == 'y':
             hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
             if hits:
-                self.alive = False
+                self.catch = True
                     
 
     def movement(self):
@@ -128,4 +129,8 @@ class Fruit(pygame.sprite.Sprite):
         if self.alive == False:
             self.kill()
             self.game.player.score-=1
+            print(self.game.player.score)
+        if self.catch == True:
+            self.kill()
+            self.game.player.score+=1
             print(self.game.player.score)
