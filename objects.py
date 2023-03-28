@@ -7,7 +7,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
         self.game=game
         self._layer=PLAYER_LAYER
-        self.groups=self.game.all_sprites
+        self.groups=self.game.all_sprites, self.game.player_group
         pygame.sprite.Sprite.__init__(self, self.groups)
 
         self.x=x*TILESIZE
@@ -25,6 +25,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y=self.y
 
         self.score=0
+        self.lives=3
     
     def update(self):
         self.movement()
@@ -70,7 +71,7 @@ class Block(pygame.sprite.Sprite):
 
         self.image = pygame.Surface([self.width,self.height])
         self.image.fill(blue)
-        #self.image.set_colorkey(blue)
+        self.image.set_colorkey(blue)
 
         self.rect=self.image.get_rect()
         self.rect.x=self.x
@@ -105,6 +106,7 @@ class Fruit(pygame.sprite.Sprite):
 
         self.rect.y += self.y_change
         self.collide_floor('y')
+        self.collide_player('y')
 
         self.y_change = 0
 
@@ -112,13 +114,13 @@ class Fruit(pygame.sprite.Sprite):
 
     def collide_floor(self,direction):
         if direction == 'y':
-            hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, True)
             if hits:
                 self.alive = False
 
     def collide_player(self,direction):
         if direction == 'y':
-            hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
+            hits = pygame.sprite.spritecollide(self, self.game.player_group, False)
             if hits:
                 self.catch = True
                     
@@ -127,9 +129,9 @@ class Fruit(pygame.sprite.Sprite):
         if self.alive:
             self.rect.y += fruit_speed
         if self.alive == False:
-            self.kill()
-            self.game.player.score-=1
-            print(self.game.player.score)
+            # self.kill()
+            self.game.player.lives-=1
+            print(self.game.player.lives)
         if self.catch == True:
             self.kill()
             self.game.player.score+=1

@@ -7,6 +7,7 @@ class Game:
     def __init__(self):
         pygame.init()
 
+
         self.bg=pygame.image.load('assets/test background.png')
         self.bg=pygame.transform.scale(self.bg,(win_width,win_height))
 
@@ -22,6 +23,7 @@ class Game:
         self.all_sprites=pygame.sprite.LayeredUpdates()
         self.blocks=pygame.sprite.LayeredUpdates()
         self.fruits=pygame.sprite.LayeredUpdates()
+        self.player_group=pygame.sprite.LayeredUpdates()
 
         self.createTilemap()
 
@@ -38,6 +40,14 @@ class Game:
         self.screen.blit(self.bg,(0,0))
         self.all_sprites.draw(self.screen)
         self.clock.tick(fps)
+
+        font = pygame.font.SysFont('Comic Sans MS', 30)
+
+        lives_text=font.render(f'Lives: {self.player.lives}', True, (blue))
+        score_text = font.render(f'Score: {self.player.score}', True, (blue))
+        self.screen.blit(lives_text, (390, 10))
+        self.screen.blit(score_text, (10, 10))
+
         pygame.display.update()
 
     def main(self):
