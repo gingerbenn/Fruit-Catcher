@@ -38,6 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.over = True
 
         if self.lives <=0:
+            self.playing=False
             self.game.over=True
             self.game.game_over()
 
@@ -148,3 +149,51 @@ class Fruit(pygame.sprite.Sprite):
             self.game.player.score+=1
             self.game.fruitSpawn()
             print(self.game.player.score)
+
+class Button:
+    def __init__(self,x, y, width, height, content, fontsize, fg, bg):
+        self.font = pygame.font.SysFont('Comic Sans MS',fontsize)
+        self.content = content
+
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height 
+
+        self.fg = fg
+        self.bg = bg
+
+        
+
+        self.image = pygame.Surface((self.width,self.height))
+        self.image.fill(self.bg)
+        self.rect = self.image.get_rect()
+
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+        self.text = self.font.render(self.content, True, self.fg)
+        self.text_rect = self.text.get_rect(center = (self.width/2,self.height/2))
+        self.image.blit(self.text, self.text_rect)
+
+        
+        
+
+    
+    def is_pressed(self, pos, pressed):
+        if self.rect.collidepoint(pos):
+            self.bg = blue
+            self.image.fill(self.bg)
+            self.image.blit(self.text, self.text_rect)
+            
+            
+            if pressed[0]:
+                self.image.fill(self.bg)
+                self.image.blit(self.text,self.text_rect)
+                pygame.time.delay(250)
+                return True
+            return False
+        self.image.fill(self.bg)
+        self.image.blit(self.text,self.text_rect)
+        self.bg = black
+        return False

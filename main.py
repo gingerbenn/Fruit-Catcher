@@ -22,6 +22,10 @@ class Game:
     def new(self):
         self.playing=True
 
+        self.over=True
+        self.running=True
+        self.playing=True
+
         self.all_sprites=pygame.sprite.LayeredUpdates()
         self.blocks=pygame.sprite.LayeredUpdates()
         self.fruits=pygame.sprite.LayeredUpdates()
@@ -70,39 +74,76 @@ class Game:
                     Fruit(self,j,i)
 
     def fruitSpawn(self):
-        Fruit(self,random.randint(1,14), random.randint(1,2))
+        Fruit(self,random.randint(2,13), random.randint(-3,-1))
 
     def game_over(self):
-        # menuBack = Button(255,350,120,50,"Back to menu",32,white,black, False)
+        menuBack = Button(175,275,175,50,"Back to menu",24,white,black)
+        self.playing = False
 
         while self.over:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    menu = False
+                    self.over=False
+                    self.playing=False
                     self.running = False
 
-            # mouse_pos = pygame.mouse.get_pos()
-            # mouse_pressed = pygame.mouse.get_pressed()
+            mouse_pos = pygame.mouse.get_pos()
+            mouse_pressed = pygame.mouse.get_pressed()
 
-            # if menuBack.is_pressed(mouse_pos, mouse_pressed):
-            #     pause=False
-            #     self.menu=False
-            #     g.mainMenu()
+            if menuBack.is_pressed(mouse_pos, mouse_pressed):
+                self.menu=True
+                self.playing=True
+                self.main_menu()
 
 
+
+            font = pygame.font.SysFont('Comic Sans MS', 30)
             self.screen.fill(red)
+            dead_text = font.render('dead', True, (blue))
+            self.screen.blit(dead_text, (390,10))
+            self.screen.blit(menuBack.image, menuBack.rect)
             self.clock.tick(fps)
             pygame.display.update()
+
+    def main_menu(self):
+        startButton = Button(175,275,175,50,"Start!",24,white,black)
+        menu=True
+
+        while menu:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.menu=False
+                    self.playing=False
+                    self.running = False
+        
+            mouse_pos = pygame.mouse.get_pos()
+            mouse_pressed = pygame.mouse.get_pressed()
+
+            if startButton.is_pressed(mouse_pos, mouse_pressed):
+                print('works')
+                menu = False
+                # print(self.player.lives)
+
+            self.screen.fill(red)
+            self.screen.blit(startButton.image, startButton.rect)
+            self.clock.tick(fps)
+            pygame.display.update()
+        
+                
         
 
 
 
 
+def startgame():
+    g=Game()
+    g.main_menu()
+    g.new()
 
-g=Game()
-g.new()
+    while g.running:
+        g.main()
+    #g.game_over()
 
-while g.running:
-    g.main()
+    pygame.quit()
 
-pygame.quit()
+startgame()
