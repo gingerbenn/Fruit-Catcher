@@ -114,7 +114,7 @@ class Fruit(pygame.sprite.Sprite):
 
     def collide_floor(self,direction):
         if direction == 'y':
-            hits = pygame.sprite.spritecollide(self, self.game.blocks, True)
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
             if hits:
                 self.alive = False
 
@@ -129,7 +129,7 @@ class Fruit(pygame.sprite.Sprite):
         if self.alive:
             self.rect.y += fruit_speed
         if self.alive == False:
-            # self.kill()
+            self.kill()
             self.game.player.lives-=1
             print(self.game.player.lives)
         if self.catch == True:
