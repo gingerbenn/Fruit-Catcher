@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 import pandas as pd
 from config import *
 from objects import *
@@ -66,6 +66,37 @@ class Game:
                     self.player = Player(self,j,i)
                 if column=='F':
                     Fruit(self,j,i)
+
+    def fruitSpawn(self):
+        Fruit(self,random.randint(1,14), random.randint(1,2))
+
+    def game_over(self):
+        menuBack = Button(255,350,120,50,"Back to menu",32,white,black, False)
+
+        while over:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    menu = False
+                    self.running = False
+
+            # mouse_pos = pygame.mouse.get_pos()
+            # mouse_pressed = pygame.mouse.get_pressed()
+
+            # if menuBack.is_pressed(mouse_pos, mouse_pressed):
+            #     pause=False
+            #     self.menu=False
+            #     g.mainMenu()
+
+
+            self.screen.blit(red)
+            self.clock.tick(fps)
+            pygame.display.update()
+        over=True
+        
+
+
+
+
 
 g=Game()
 g.new()

@@ -77,6 +77,8 @@ class Block(pygame.sprite.Sprite):
         self.rect.x=self.x
         self.rect.y=self.y
 
+        
+
 class Fruit(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
         self.game = game
@@ -128,11 +130,15 @@ class Fruit(pygame.sprite.Sprite):
     def movement(self):
         if self.alive:
             self.rect.y += fruit_speed
+
         if self.alive == False:
             self.kill()
             self.game.player.lives-=1
+            self.game.fruitSpawn()
             print(self.game.player.lives)
+
         if self.catch == True:
             self.kill()
             self.game.player.score+=1
+            self.game.fruitSpawn()
             print(self.game.player.score)
