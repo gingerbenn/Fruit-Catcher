@@ -17,6 +17,8 @@ class Game:
 
         self.running=True
 
+        
+
     def new(self):
         self.playing=True
 
@@ -71,9 +73,9 @@ class Game:
         Fruit(self,random.randint(1,14), random.randint(1,2))
 
     def game_over(self):
-        menuBack = Button(255,350,120,50,"Back to menu",32,white,black, False)
+        # menuBack = Button(255,350,120,50,"Back to menu",32,white,black, False)
 
-        while over:
+        while self.over:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     menu = False
@@ -88,10 +90,9 @@ class Game:
             #     g.mainMenu()
 
 
-            self.screen.blit(red)
+            self.screen.fill(red)
             self.clock.tick(fps)
             pygame.display.update()
-        over=True
         
 
 
