@@ -57,8 +57,8 @@ class Game:
 
         lives_text=font.render(f'Lives: {self.player.lives}', True, (blue))
         score_text = font.render(f'Score: {self.player.score}', True, (blue))
-        self.screen.blit(lives_text, (390, 10))
-        self.screen.blit(score_text, (10, 10))
+        self.screen.blit(lives_text, (390, 450))
+        self.screen.blit(score_text, (10, 450))
 
         pygame.display.update()
 
