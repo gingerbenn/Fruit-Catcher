@@ -26,6 +26,8 @@ class Player(pygame.sprite.Sprite):
 
         self.score=0
         self.lives=3
+
+        self.player_speed=5
     
     def update(self):
         self.movement()
@@ -37,6 +39,9 @@ class Player(pygame.sprite.Sprite):
 
         if self.lives <=0:
             self.game.game_over()
+        
+        if self.player_speed%5==0:
+            self.player_speed+=0.5
 
         
 
@@ -55,10 +60,10 @@ class Player(pygame.sprite.Sprite):
     def movement(self):
         keys=pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            self.x_change-= PLAYER_SPEED
+            self.x_change-= self.player_speed
 
         if keys[pygame.K_RIGHT]:
-            self.x_change+=PLAYER_SPEED
+            self.x_change+=self.player_speed
 
 class Block(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -106,6 +111,7 @@ class Fruit(pygame.sprite.Sprite):
 
         self.y_change = 0
 
+
     def update(self):
         self.movement()
 
@@ -128,23 +134,28 @@ class Fruit(pygame.sprite.Sprite):
             hits = pygame.sprite.spritecollide(self, self.game.player_group, False)
             if hits:
                 self.catch = True
+                # self.game.fruit_speed+=0.05
                     
 
     def movement(self):
         if self.alive:
-            self.rect.y += fruit_speed
+            self.rect.y += self.game.fruit_speed
+
+        if self.game.player.score%5==0:
+            self.game.fruit_speed+=0.01
+        
 
         if self.alive == False:
+            self.game.fruit_count-=1
             self.kill()
             self.game.player.lives-=1
             self.game.fruitSpawn()
-            print(self.game.player.lives)
 
         if self.catch == True:
+            self.game.fruit_count-=1
             self.kill()
             self.game.player.score+=1
             self.game.fruitSpawn()
-            print(self.game.player.score)
 
 class Button:
     def __init__(self,x, y, width, height, content, fontsize, fg, bg):

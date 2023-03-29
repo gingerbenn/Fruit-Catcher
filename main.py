@@ -6,10 +6,14 @@ from objects import *
 class Game:
     def __init__(self):
         pygame.init()
+        pygame.font.init()
 
 
         self.bg=pygame.image.load('assets/test background.png')
         self.bg=pygame.transform.scale(self.bg,(win_width,win_height))
+
+        self.titlebg=pygame.image.load('assets/minecraft_6vGzNjI.jpg')
+        self.titlebg=pygame.transform.scale(self.titlebg,(win_width,win_height))
 
         self.screen=pygame.display.set_caption('fruit catcher™')
         self.screen=pygame.display.set_mode((win_width, win_height))
@@ -17,7 +21,9 @@ class Game:
 
         self.running=True
 
-        
+        self.fruit_speed=3
+
+        self.fruit_count = 0
 
     def new(self):
         self.playing=True
@@ -75,6 +81,10 @@ class Game:
 
     def fruitSpawn(self):
         Fruit(self,random.randint(2,13), random.randint(-3,-1))
+        self.fruit_count+=1
+
+        if self.fruit_count>=2:
+            self.kill()
 
     def game_over(self):
         menuBack = Button(175,275,175,50,"Back to menu",24,white,black)
@@ -93,7 +103,7 @@ class Game:
                 startgame()
 
 
-
+            
             font = pygame.font.SysFont('Comic Sans MS', 30)
             self.screen.fill(red)
             dead_text = font.render('dead', True, (blue))
@@ -118,11 +128,10 @@ class Game:
             mouse_pressed = pygame.mouse.get_pressed()
 
             if startButton.is_pressed(mouse_pos, mouse_pressed):
-                print('works')
                 menu = False
-                # print(self.player.lives)
 
-            self.screen.fill(red)
+            
+            self.screen.blit(self.titlebg,(0,0))
             self.screen.blit(startButton.image, startButton.rect)
             self.clock.tick(fps)
             pygame.display.update()
@@ -140,7 +149,7 @@ def startgame():
 
     while g.running:
         g.main()
-    #g.game_over()
+        g.events()
 
     pygame.quit()
 

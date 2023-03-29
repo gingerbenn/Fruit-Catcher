@@ -12,8 +12,8 @@ fruit_layer = 1
 TILESIZE = 32
 fps=60
 
-PLAYER_SPEED=5
-fruit_speed=4
+
+
 
 win_width, win_height = 510, 510
 
