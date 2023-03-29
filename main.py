@@ -40,10 +40,6 @@ class Game:
     def new(self):
         self.playing=True
 
-        self.over=True
-        self.running=True
-        self.playing=True
-
         self.all_sprites=pygame.sprite.LayeredUpdates()
         self.blocks=pygame.sprite.LayeredUpdates()
         self.fruits=pygame.sprite.LayeredUpdates()
@@ -54,6 +50,7 @@ class Game:
     def events(self):
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
+                self.menu=False
                 self.playing=False
                 self.running=False
 
@@ -62,9 +59,12 @@ class Game:
 
     def draw(self):
         self.screen.blit(self.bg,(0,0))
-        self.screen.blit(self.heart,(390,10))
         self.all_sprites.draw(self.screen)
         self.clock.tick(fps)
+
+        # for i in range(self.player.lives):
+        #     self.screen.blit(self.heart,(self.player.num,10))
+        #     #self.player.num -= 50
 
         font = pygame.font.Font('assets/m5x7.ttf', 40)
 
@@ -106,6 +106,7 @@ class Game:
         while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    self.menu=False
                     self.playing=False
                     self.running = False
 
@@ -128,9 +129,9 @@ class Game:
 
     def main_menu(self):
         startButton = Button(175,275,175,50,"Start!",24,white,black)
-        menu=True
+        self.menu=True
 
-        while menu:
+        while self.menu:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.menu=False
@@ -141,7 +142,7 @@ class Game:
             mouse_pressed = pygame.mouse.get_pressed()
 
             if startButton.is_pressed(mouse_pos, mouse_pressed):
-                menu = False
+                self.menu = False
 
             
             self.screen.blit(self.titlebg,(0,0))
@@ -163,8 +164,10 @@ def startgame():
 
     while g.running:
         g.main()
+        g.game_over()
         
 
     pygame.quit()
+    exit()
 
 startgame()

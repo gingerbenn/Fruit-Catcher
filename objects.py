@@ -26,10 +26,13 @@ class Player(pygame.sprite.Sprite):
         self.score=0
         self.lives=3
 
+        self.num = 390
+
         self.player_speed=5
     
     def update(self):
         self.movement()
+
 
         self.rect.x+=self.x_change
         self.collision('x')
