@@ -15,6 +15,12 @@ class Game:
         self.titlebg=pygame.image.load('assets/minecraft_6vGzNjI.jpg')
         self.titlebg=pygame.transform.scale(self.titlebg,(win_width,win_height))
 
+        self.heart=pygame.image.load('assets/minecraftheart.png')
+        self.heart=pygame.transform.scale(self.heart,(100,100))
+
+        self.heartEmpty=pygame.image.load('assets/minecraftheartEMPTY.png')
+        self.heartEmpty=pygame.transform.scale(self.heartEmpty,(100,100))
+
         self.screen=pygame.display.set_caption('fruit catcher™')
         self.screen=pygame.display.set_mode((win_width, win_height))
         self.clock=pygame.time.Clock()
@@ -50,6 +56,7 @@ class Game:
 
     def draw(self):
         self.screen.blit(self.bg,(0,0))
+        self.screen.blit(self.heart,(390,10))
         self.all_sprites.draw(self.screen)
         self.clock.tick(fps)
 
@@ -149,7 +156,7 @@ def startgame():
 
     while g.running:
         g.main()
-        g.events()
+        
 
     pygame.quit()
 
