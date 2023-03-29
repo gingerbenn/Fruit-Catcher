@@ -60,7 +60,7 @@ class Game:
         self.all_sprites.draw(self.screen)
         self.clock.tick(fps)
 
-        font = pygame.font.SysFont('Comic Sans MS', 30)
+        font = pygame.font.Font('assets/m5x7.ttf', 40)
 
         lives_text=font.render(f'Lives: {self.player.lives}', True, (blue))
         score_text = font.render(f'Score: {self.player.score}', True, (blue))
@@ -111,7 +111,7 @@ class Game:
 
 
             
-            font = pygame.font.SysFont('Comic Sans MS', 30)
+            font = pygame.font.Font('assets/m5x7.ttf', 40)
             self.screen.fill(red)
             dead_text = font.render('dead', True, (blue))
             self.screen.blit(dead_text, (390,10))

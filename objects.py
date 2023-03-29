@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
 
         self.x=x*TILESIZE
         self.y=y*TILESIZE
-        self.width=TILESIZE/32
+        self.width=TILESIZE*2
         self.height=TILESIZE
 
         self.x_change = 0
@@ -159,7 +159,7 @@ class Fruit(pygame.sprite.Sprite):
 
 class Button:
     def __init__(self,x, y, width, height, content, fontsize, fg, bg):
-        self.font = pygame.font.SysFont('Comic Sans MS',fontsize)
+        self.font = pygame.font.Font('assets/m5x7.ttf',fontsize)
         self.content = content
 
         self.x = x
