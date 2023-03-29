@@ -35,11 +35,7 @@ class Player(pygame.sprite.Sprite):
 
         self.x_change=0
 
-        self.over = True
-
         if self.lives <=0:
-            self.playing=False
-            self.game.over=True
             self.game.game_over()
 
         

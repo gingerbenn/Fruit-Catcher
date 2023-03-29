@@ -80,10 +80,9 @@ class Game:
         menuBack = Button(175,275,175,50,"Back to menu",24,white,black)
         
 
-        while self.over:
+        while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.over=False
                     self.playing=False
                     self.running = False
 
@@ -91,8 +90,7 @@ class Game:
             mouse_pressed = pygame.mouse.get_pressed()
 
             if menuBack.is_pressed(mouse_pos, mouse_pressed):
-                self.playing=True
-                self.main_menu()
+                startgame()
 
 
 
@@ -122,7 +120,6 @@ class Game:
             if startButton.is_pressed(mouse_pos, mouse_pressed):
                 print('works')
                 menu = False
-                self.game_over=False
                 # print(self.player.lives)
 
             self.screen.fill(red)
