@@ -21,6 +21,12 @@ class Game:
         self.heartEmpty=pygame.image.load('assets/minecraftheartEMPTY.png')
         self.heartEmpty=pygame.transform.scale(self.heartEmpty,(100,100))
 
+        self.title=pygame.image.load('assets/minecraft title screen.png')
+
+        self.deathscreen=pygame.image.load('assets/minecraftdeath.png')
+        self.deathscreen=pygame.transform.scale(self.deathscreen,(win_width,win_height))
+
+
         self.screen=pygame.display.set_caption('fruit catcher™')
         self.screen=pygame.display.set_mode((win_width, win_height))
         self.clock=pygame.time.Clock()
@@ -112,7 +118,7 @@ class Game:
 
             
             font = pygame.font.Font('assets/m5x7.ttf', 40)
-            self.screen.fill(red)
+            self.screen.blit(self.deathscreen,(0,0))
             dead_text = font.render('dead', True, (blue))
             self.screen.blit(dead_text, (390,10))
             self.screen.blit(menuBack.image, menuBack.rect)
@@ -139,6 +145,7 @@ class Game:
 
             
             self.screen.blit(self.titlebg,(0,0))
+            self.screen.blit(self.title,(0,40))
             self.screen.blit(startButton.image, startButton.rect)
             self.clock.tick(fps)
             pygame.display.update()
