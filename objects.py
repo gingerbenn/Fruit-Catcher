@@ -40,6 +40,7 @@ class Player(pygame.sprite.Sprite):
         self.x_change=0
 
         if self.lives <=0:
+            pygame.mixer.Sound.play(self.game.minecraftDeath)
             self.game.game_over()
         
         if self.player_speed%5==0:
@@ -148,6 +149,7 @@ class Fruit(pygame.sprite.Sprite):
         
 
         if self.alive == False:
+            pygame.mixer.Sound.play(self.game.minecraftDamage)
             self.game.fruit_count-=1
             self.kill()
             self.game.player.lives-=1

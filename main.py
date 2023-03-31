@@ -5,6 +5,7 @@ from objects import *
 
 class Game:
     def __init__(self):
+        pygame.mixer.pre_init()
         pygame.init()
         pygame.font.init()
 
@@ -26,6 +27,9 @@ class Game:
         self.deathscreen=pygame.image.load('assets/minecraftdeath.png')
         self.deathscreen=pygame.transform.scale(self.deathscreen,(win_width,win_height))
 
+        self.minecraftClick=pygame.mixer.Sound('assets/minecraftclick.wav')
+        self.minecraftDamage=pygame.mixer.Sound('assets/minecraft_hit_soundmp3converter.wav')
+        self.minecraftDeath=pygame.mixer.Sound('assets/minecraft-steves-sounds-damage-and-deaths.wav')
 
         self.screen=pygame.display.set_caption('fruit catcher™')
         self.screen=pygame.display.set_mode((win_width, win_height))
@@ -61,10 +65,6 @@ class Game:
         self.screen.blit(self.bg,(0,0))
         self.all_sprites.draw(self.screen)
         self.clock.tick(fps)
-
-        # for i in range(self.player.lives):
-        #     self.screen.blit(self.heart,(self.player.num,10))
-        #     #self.player.num -= 50
 
         font = pygame.font.Font('assets/m5x7.ttf', 40)
 
@@ -114,6 +114,7 @@ class Game:
             mouse_pressed = pygame.mouse.get_pressed()
 
             if menuBack.is_pressed(mouse_pos, mouse_pressed):
+                pygame.mixer.Sound.play(self.minecraftClick)
                 startgame()
 
 
@@ -142,7 +143,9 @@ class Game:
             mouse_pressed = pygame.mouse.get_pressed()
 
             if startButton.is_pressed(mouse_pos, mouse_pressed):
+                pygame.mixer.Sound.play(self.minecraftClick)
                 self.menu = False
+                
 
             
             self.screen.blit(self.titlebg,(0,0))
